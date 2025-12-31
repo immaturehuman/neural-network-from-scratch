@@ -6,14 +6,6 @@ np.random.seed(42)
 
 class NeuralNetwork:
     def __init__(self, input_size, hidden_size, output_size):
-        """
-        Initialize a simple neural network with one hidden layer.
-        
-        Parameters:
-        - input_size: number of input features
-        - hidden_size: number of neurons in hidden layer
-        - output_size: number of output neurons
-        """
         # Initialize weights with random values
         self.W1 = np.random.randn(input_size, hidden_size) * 0.01
         self.b1 = np.zeros((1, hidden_size))
@@ -76,16 +68,6 @@ class NeuralNetwork:
         return loss
     
     def backward_propagation(self, X, Y):
-        """
-        Perform backpropagation to compute gradients.
-        
-        Parameters:
-        - X: input data
-        - Y: true labels
-        
-        Returns:
-        - gradients dictionary
-        """
         m = X.shape[0]
         
         # Get cached values from forward propagation
@@ -112,31 +94,12 @@ class NeuralNetwork:
         return self.gradients
     
     def update_parameters(self, learning_rate=0.1):
-        """
-        Update network parameters using gradient descent.
-        
-        Parameters:
-        - learning_rate: step size for gradient descent
-        """
         self.W1 -= learning_rate * self.gradients['dW1']
         self.b1 -= learning_rate * self.gradients['db1']
         self.W2 -= learning_rate * self.gradients['dW2']
         self.b2 -= learning_rate * self.gradients['db2']
     
     def train(self, X, Y, epochs=1000, learning_rate=0.1, verbose=True):
-        """
-        Train the neural network.
-        
-        Parameters:
-        - X: input data
-        - Y: true labels
-        - epochs: number of training iterations
-        - learning_rate: step size for gradient descent
-        - verbose: whether to print progress
-        
-        Returns:
-        - losses: list of loss values over training
-        """
         losses = []
         
         for epoch in range(epochs):
@@ -160,30 +123,11 @@ class NeuralNetwork:
         return losses
     
     def predict(self, X):
-        """
-        Make predictions using the trained network.
-        
-        Parameters:
-        - X: input data
-        
-        Returns:
-        - predictions: binary predictions (0 or 1)
-        """
         Y_hat = self.forward_propagation(X)
         predictions = (Y_hat > 0.5).astype(int)
         return predictions
     
     def accuracy(self, Y_true, Y_pred):
-        """
-        Compute accuracy of predictions.
-        
-        Parameters:
-        - Y_true: true labels
-        - Y_pred: predicted labels
-        
-        Returns:
-        - accuracy: percentage of correct predictions
-        """
         return np.mean(Y_true == Y_pred) * 100
 
 # Create a simple XOR dataset
